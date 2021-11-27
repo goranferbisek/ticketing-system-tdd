@@ -1,12 +1,28 @@
 package si.ferbisek.ticketing;
 
+import java.time.LocalDate;
+
 public class TicketEntry {
 	
 	private int duration;
-	//private somekindofdate date;
+	private LocalDate date;
 	
 	public TicketEntry(int minutes) {
+		this.date = LocalDate.now();
 		setDuration(minutes);
+	}
+	
+	public TicketEntry(LocalDate date, int minutes) {
+		this.date = date;
+		setDuration(minutes);
+	}
+	
+	public LocalDate getDate() {
+		return date;
+	}
+	
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
 	
 	public int getDuration() {
