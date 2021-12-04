@@ -1,18 +1,32 @@
 package si.ferbisek.ticketing;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class TicketingSystem {
 	
-	List<Ticket> tickets;
+	private static TicketingSystem instance = null;
 	
-	public TicketingSystem() {
+	private List<Ticket> tickets;
+	
+	
+	private TicketingSystem() {
 		tickets = new ArrayList<Ticket>();
 	}
 	
+	public static TicketingSystem getInstance() {
+		if (instance == null) {
+			return new TicketingSystem();
+		}
+		return instance;
+	}
+	
 	public void add(Ticket t) {
-		tickets.add(t);
+		if (!tickets.contains(t)) {
+			tickets.add(t);
+		}
 	}
 	
 	public List<Ticket> getTickets() {
@@ -24,6 +38,31 @@ public class TicketingSystem {
 				.filter(ticket -> name.equals(name))
 				.findAny()
 				.orElse(null);
+	}
+	
+	public static List<TicketEntry> getEntriesByDate(LocalDate date) {
+		return null;
+	}
+	
+	public static int sumOfWork(List<TicketEntry> entries) {
+		return -1;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(tickets);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TicketingSystem other = (TicketingSystem) obj;
+		return Objects.equals(tickets, other.tickets);
 	}
 
 }
