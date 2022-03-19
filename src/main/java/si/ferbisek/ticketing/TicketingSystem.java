@@ -40,6 +40,12 @@ public class TicketingSystem {
 				.findAny()
 				.orElse(null);
 	}
+
+	public List<TicketEntry> getAllEntries() {
+		return tickets.stream()
+					.flatMap(t -> t.getEntries().stream())
+					.collect(Collectors.toList());
+	}
 	
 	public List<TicketEntry> getEntriesByDate(LocalDate date) {
 		return tickets.stream()
@@ -49,7 +55,7 @@ public class TicketingSystem {
 	}
 	
 	public static int sumOfWork(List<TicketEntry> entries) {
-		return -1;
+		return entries.stream().mapToInt(e -> e.getDuration()).sum();
 	}
 
 	@Override

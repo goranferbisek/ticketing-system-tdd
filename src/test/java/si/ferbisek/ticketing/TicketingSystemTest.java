@@ -3,6 +3,7 @@ package si.ferbisek.ticketing;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -80,7 +81,20 @@ public class TicketingSystemTest {
 	
 	@Test
 	public void canGetSumOfWork() {
-		
+		TicketingSystem tickets = TicketingSystem.getInstance();
+		Ticket ticket = new Ticket("testing");
+		ticket.add(new TicketEntry(10));
+		ticket.add(new TicketEntry(20));
+		ticket.add(new TicketEntry(30));
+		tickets.add(ticket);
+		Ticket ticket2 = new Ticket("developing");
+		ticket2.add(new TicketEntry(20));
+		ticket2.add(new TicketEntry(20));
+		tickets.add(ticket2);
+
+		List<TicketEntry> entries = tickets.getAllEntries();
+
+		assertEquals(100, TicketingSystem.sumOfWork(entries));
 	}
 
 }
