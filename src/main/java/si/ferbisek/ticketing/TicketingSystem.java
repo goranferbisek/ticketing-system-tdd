@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class TicketingSystem {
 	
@@ -40,8 +41,11 @@ public class TicketingSystem {
 				.orElse(null);
 	}
 	
-	public static List<TicketEntry> getEntriesByDate(LocalDate date) {
-		return null;
+	public List<TicketEntry> getEntriesByDate(LocalDate date) {
+		return tickets.stream()
+					.flatMap(t -> t.getEntries().stream())
+					.filter(e -> e.getDate().equals(date))
+					.collect(Collectors.toList());
 	}
 	
 	public static int sumOfWork(List<TicketEntry> entries) {

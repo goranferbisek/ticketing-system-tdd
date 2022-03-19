@@ -2,6 +2,9 @@ package si.ferbisek.ticketing;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 public class TicketingSystemTest {
@@ -56,16 +59,23 @@ public class TicketingSystemTest {
 	}
 	
 	@Test
-	public void canGetEntriesByDate() {		
+	public void canGetEntriesByDate() {
+		LocalDate date = LocalDate.of(2021, 11, 19);		
 		TicketingSystem tickets = TicketingSystem.getInstance();
 		Ticket ticket = new Ticket("testing");
-		ticket.add(new TicketEntry(10));
+		ticket.add(new TicketEntry(date, 10));
 		ticket.add(new TicketEntry(20));
+		ticket.add(new TicketEntry(date, 30));
 		tickets.add(ticket);
+		Ticket ticket2 = new Ticket("developing");
+		ticket2.add(new TicketEntry(date, 20));
+		ticket2.add(new TicketEntry(20));
+		tickets.add(ticket2);
 
-		int duration = tickets.getTickets().get(0).getEntries().get(0).getDuration();
+		List<TicketEntry> entriesOnDate = tickets.getEntriesByDate(date);
+		int duration = entriesOnDate.stream().mapToInt(e -> e.getDuration()).sum();
+
 		assertEquals(60, duration);
-		
 	}
 	
 	@Test
